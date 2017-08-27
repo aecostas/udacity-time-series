@@ -1,0 +1,75 @@
+INTRODUCTION
+============
+Forecasting:
+   - average -> very bad
+   - moving average -> take only the last X time units to calculate the average (for instance, 12 months)
+   - naive method -> take last value as estimator of the next one
+   - exponential smoothing
+
+Time series trends:
+   - downtrend
+   - uptrend
+   - horizontal trend
+
+Seasonality
+   - common pattern across many different types of time series
+   - cyclical vs seasonality
+       - cyclical: no fixed period
+       - seasonal: unchanging and associated with some aspect of the calendar
+       - a time series can have both components, one of them or neither
+
+
+ETS MODELS
+==========
+Weighted averaged of past observations
+Time series decomposition:
+     - error (observed value - trendline estimated)
+     - trend
+     - seasonality
+
+Additive vs Multiplicative behaviour
+     - additive (linear): trend and seasonal variation are releatively constant
+     - multiplicative (exponential):   "               increase or decrease in magnitude over time
+     
+
+ETS models:
+    - Simple Exponential Smoothing Method
+      * neither trend nor seasonal component
+      * average over past periods with a smoothing parameter alpha
+      * http://pandas-docs.github.io/pandas-docs-travis/computation.html#exponentially-weighted-windows
+    - Holt's Linear Trend Method
+      * also known as double exponential smoothing
+      * works fine for non seasonal data
+      * uses level and trend additively
+    - Exponential Trend Method
+      * non seasonal data
+      * user level and trend multiplicatly. This way, level and trend will increase/decrease exponentially rather than linear
+    - Holt-Winters Seasonal Method
+      * takes into account seasonal, trend and level component	
+
+ARIMA (autoregressive integrated moving average)
+=====
+Types:
+   - non seasonal
+   - seasonal
+
+ARIMA = (p d q)  -> number of periods to consider
+      AR -> autoregressive terms
+      I -> differencing == transforming the time series into an stationary one, that is, a signal with constant mean and variance 
+      MA -> moving average -> lag of the error component (error = part not explained by trend or seasonality)
+
+
+ACP (autocorrelation plot) 
+    - autocorrelation with past values
+    - allows to decide whether to use AR, AM or both
+      - AR
+      	* use it when the ACP decreases sharply after a few lags
+      	* predicts based on the past values of the variable
+      - MA
+      	* ACP decrease more gradually
+
+
+ARIMA non-seasonal -> ARIMA(p, d, q)
+ARIMA seasonal -> ARIMA(p, d, q)(P, D, Q) (m)
+      * (P, D, Q) are the p,d,q values for the seasonal part
+      * m -> number of periods in each season
